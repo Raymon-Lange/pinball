@@ -1,0 +1,10 @@
+# Build artifacts
+Pinball
+src/*.o
+.sconsign.dblite
+
+# BMP files copied to root (originals are in images/)
+*.bmp
+
+# Archives
+versions/

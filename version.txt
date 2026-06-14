@@ -1,0 +1,14 @@
+Pinball : Version 0.7
+Author  : Raymon Lange
+
+Add:
+    ~ added targes
+Fix: 
+    ~ Increased the breakout count from 1000 to 5000
+         fixed the issue where ball would go into the black
+
+    ~ Triangle bummer have a lower projectory and with little bit of randmonness
+Code: 
+
+Todo:
+  ~ Next version will contain scoring

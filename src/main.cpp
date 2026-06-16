@@ -5,12 +5,30 @@
 
 #define PI 3.1415926535
 
+// On Linux .deb installs, PINBALL_DATA_DIR is set by CMake to the share/ path.
+// On Windows/macOS, ALLEGRO_RESOURCES_PATH resolves to the directory next to the binary.
+// In dev builds (no define, no WIN32/APPLE), the current directory is used (existing behaviour).
+static void setupDataPath()
+{
+#if defined(PINBALL_DATA_DIR)
+    al_change_directory(PINBALL_DATA_DIR);
+#elif defined(_WIN32) || defined(__APPLE__)
+    ALLEGRO_PATH *res = al_get_standard_path(ALLEGRO_RESOURCES_PATH);
+    if (res) {
+        al_change_directory(al_path_cstr(res, ALLEGRO_NATIVE_PATH_SEP));
+        al_destroy_path(res);
+    }
+#endif
+}
+
 void setupscreen()
 {
     al_set_new_display_option(ALLEGRO_VSYNC, 1, ALLEGRO_SUGGEST);
     display = al_create_display(WIDTH, HEIGHT);
     if(!display)
         fprintf(stderr, "Failed to create display\n");
+    event_queue = al_create_event_queue();
+    al_register_event_source(event_queue, al_get_display_event_source(display));
 }
 
 void setupGame()
@@ -78,9 +96,19 @@ void Plunger()
     int waitForPlayer = 1;
     double power = 0;
     ALLEGRO_KEYBOARD_STATE kstate;
+    ALLEGRO_EVENT event;
 
     while(waitForPlayer)
     {
+        while(al_get_next_event(event_queue, &event))
+        {
+            if(event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
+            {
+                gameover = 1;
+                return;
+            }
+        }
+
         al_get_keyboard_state(&kstate);
 
         if(al_key_down(&kstate, ALLEGRO_KEY_ESCAPE))
@@ -120,6 +148,13 @@ void ReShoot()
 
 void GetInput()
 {
+    ALLEGRO_EVENT event;
+    while(al_get_next_event(event_queue, &event))
+    {
+        if(event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
+            gameover = 1;
+    }
+
     ALLEGRO_KEYBOARD_STATE kstate;
     al_get_keyboard_state(&kstate);
 
@@ -447,6 +482,8 @@ int main(void)
 
     setupscreen();
     setupGame();
+
+    setupDataPath();
 
     // Use memory bitmaps so al_get_pixel works without locking
     al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);

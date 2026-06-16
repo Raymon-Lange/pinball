@@ -16,7 +16,7 @@ paddle::~paddle(){
     }
 }
 
-int paddle::load(char *filename) {
+int paddle::load(const char *filename) {
     map = load_bitmap(filename, NULL);
     if (map == NULL)
         return 0;

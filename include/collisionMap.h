@@ -18,7 +18,7 @@ public:
 public:
 	collisionMap(void);
 	~collisionMap(void);
-	int load(char *filename);
+	int load(const char *filename);
 	int load(BITMAP *newMap);
 	int checkcollisions(int x, int y);
 };

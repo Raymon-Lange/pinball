@@ -15,7 +15,7 @@ collisionMap::~collisionMap(){
     }
 }
 
-int collisionMap::load(char *filename) {
+int collisionMap::load(const char *filename) {
     map = load_bitmap(filename, NULL);
 
     if (map == NULL) 

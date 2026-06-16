@@ -17,7 +17,7 @@ public:
 public:
     paddle(void);
     ~paddle(void);
-    int load(char *filename);
+    int load(const char *filename);
     int load(BITMAP *newMap);
 };
 #endif

@@ -10,7 +10,7 @@ void setupscreen()
     set_color_depth(16);
     int ret = set_gfx_mode(GFX_SAFE, WIDTH, HEIGHT, 0, 0);
     if(ret != 0){
-       allegro_message(allegro_error);
+       allegro_message("%s", allegro_error);
        return;
     }
 }

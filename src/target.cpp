@@ -1,18 +1,16 @@
-//#define CIRLCE 1
-//#define RECTANGLE 2
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_primitives.h>
 #include "target.h"
 
-target::target()
-{
+target::target() {
     type = CIRCLE;
-    xpos = 0; 
+    xpos = 0;
     ypos = 0;
     hitState = 0;
     beingHit = false;
 }
 
-target::target(int targetType, int x, int y)
-{
+target::target(int targetType, int x, int y) {
     type = targetType;
     xpos = x;
     ypos = y;
@@ -20,50 +18,34 @@ target::target(int targetType, int x, int y)
     beingHit = false;
 }
 
-target::~target()
-{
-   //Do nothing atm
-}
+target::~target() {}
 
-void target::draw(BITMAP *bmp)
-{
-    if(type == CIRCLE)
-    {
+void target::draw(ALLEGRO_BITMAP *bmp) {
+    if(type == CIRCLE) {
+        ALLEGRO_COLOR yellow = al_map_rgb(0, 255, 0);
+        al_set_target_bitmap(bmp);
         if(hitState)
-        {
-            circlefill(bmp, xpos, ypos, 5, YELLOW);
-        }
+            al_draw_filled_circle(xpos, ypos, RADIUS, yellow);
         else
-        {
-            circle(bmp, xpos, ypos, 5, YELLOW);
-        }
-    }
-    else if(type == RECTANGLE)
-    {
-        //TODO
+            al_draw_circle(xpos, ypos, RADIUS, yellow, 1);
     }
 }
 
-int target::checkHit(int x, int y)
-{
-    //step create box
-    int leftX = xpos - RADIUS;
-    int rightX = xpos + RADIUS;
-
-    int topY = ypos - RADIUS;
+int target::checkHit(int x, int y) {
+    int leftX   = xpos - RADIUS;
+    int rightX  = xpos + RADIUS;
+    int topY    = ypos - RADIUS;
     int bottomY = ypos + RADIUS;
-    
-    bool hitX = (leftX <= x && rightX >= x);
-    bool hitY = (topY <= y && bottomY >= y);
 
-    if(hitX && hitY)
-    {
-        if(!beingHit)
-        {
+    bool hitX = (leftX <= x && rightX >= x);
+    bool hitY = (topY  <= y && bottomY >= y);
+
+    if(hitX && hitY) {
+        if(!beingHit) {
             beingHit = true;
-            hitState = (hitState +1) % 2;
+            hitState = (hitState + 1) % 2;
             return 1;
-        }   
+        }
     }
     beingHit = false;
     return 0;

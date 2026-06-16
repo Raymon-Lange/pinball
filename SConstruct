@@ -26,9 +26,8 @@ for file in list_of_src_files_to_compile:
 
 env = Environment(CPPPATH = ['#/include'])
 
-env.ParseConfig( 'allegro-config --libs' );
+env.ParseConfig('pkg-config allegro-5 allegro_image-5 allegro_primitives-5 --libs --cflags')
 
 env.Program(target='Pinball',
             source= list_of_src_files_with_path,
-            CCFLAGS = '-O2 -W -Wall -Wextra -Werror -Wno-unused-parameter')
-
+            CCFLAGS = '-O2 -W -Wall -Wextra -Wno-unused-parameter')

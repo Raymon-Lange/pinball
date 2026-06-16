@@ -1,7 +1,6 @@
 #include "target.h"
 
-class targetHandler
-{
+class targetHandler {
 private:
     int count;
     target *targets[100];
@@ -14,5 +13,5 @@ public:
     int size(){ return count; }
     void removeAll();
     void checkHit(int xpos, int ypos);
-    void draw(BITMAP *bmp);
+    void draw(ALLEGRO_BITMAP *bmp);
 };

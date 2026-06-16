@@ -1,38 +1,29 @@
-// Author: Raymon Lange
-// Pinball.h this is my 1st pin ball game
 #ifndef _PINBALL_H
 #define _PINBALL_H
 
-#include "allegro.h"
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_image.h>
+#include <allegro5/allegro_primitives.h>
 #include "collisionMap.h"
 #include "paddle.h"
 #include "targetHandler.h"
 
-#define MODE GFX_AUTODETECT_WINDOWED
-#define WIDTH 400 
+#define WIDTH  400
 #define HEIGHT 680
-#define RED makecol(255,0,0)
 
-struct ball
-{
-    double x;
-    double y;
-    double a;
-    double b;
-    double ang;
-    double angN;
-    double mag;
-    double angX;
-    double angY;
-    double magG;
+struct ball {
+    double x, y;
+    double a, b;
+    double ang, angN, mag;
+    double angX, angY, magG;
     int numAng;
-}pinballs[2];
+} pinballs[2];
 
+int             gameover = 0;
+ALLEGRO_DISPLAY *display;
+ALLEGRO_BITMAP  *background;
+ALLEGRO_BITMAP  *paddleBuffer;
 
-int gameover = 0;
-BITMAP *background;
-BITMAP *paddleBuffer;
- 
 collisionMap *map;
 collisionMap *paddleMap;
 collisionMap *leftBummer;
@@ -46,6 +37,4 @@ paddle *rightPaddle;
 
 targetHandler *targets;
 
-void initialize();
-void initializeBackground();
 #endif

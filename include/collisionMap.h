@@ -1,26 +1,18 @@
 #ifndef _COLLISIONMAP_H
 #define _COLLISIONMAP_H
-#include "allegro.h"
-#include <iostream>
-#include <string>
+#include <allegro5/allegro.h>
 
-
-#define BLACK makecol(0,0,0);
-
-using namespace std;
-
-class collisionMap{
-private:
+class collisionMap {
 public:
-	BITMAP *map;
-	int mapHeight;
-	int mapWidth;
+    ALLEGRO_BITMAP *map;
+    int mapHeight;
+    int mapWidth;
 public:
-	collisionMap(void);
-	~collisionMap(void);
-	int load(const char *filename);
-	int load(BITMAP *newMap);
-	int checkcollisions(int x, int y);
+    collisionMap(void);
+    ~collisionMap(void);
+    int load(const char *filename);
+    int load(ALLEGRO_BITMAP *newMap);
+    int checkcollisions(int x, int y);
 };
 
 #endif

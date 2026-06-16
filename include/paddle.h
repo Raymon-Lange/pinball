@@ -1,14 +1,10 @@
-#ifndef _PADDLE_h
-#define _PADDLE_h
-#include "allegro.h"
-#include <string>
+#ifndef _PADDLE_H
+#define _PADDLE_H
+#include <allegro5/allegro.h>
 
-using namespace std;
-
-class paddle{
-private:
+class paddle {
 public:
-    BITMAP *map;
+    ALLEGRO_BITMAP *map;
     int x;
     int y;
     int power;
@@ -18,6 +14,6 @@ public:
     paddle(void);
     ~paddle(void);
     int load(const char *filename);
-    int load(BITMAP *newMap);
+    int load(ALLEGRO_BITMAP *newMap);
 };
 #endif
